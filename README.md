@@ -130,7 +130,9 @@ Open `dashboard/index.html` in a browser to view the Mac-friendly dashboard.
 |   |-- README.md
 |   `-- run_sqlite_analysis.ps1
 |-- scripts/
-|   `-- build_dashboard.ps1
+|   |-- build_dashboard.ps1
+|   `-- validate_dashboard.mjs
+|-- index.html
 `-- README.md
 ```
 

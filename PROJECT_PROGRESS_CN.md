@@ -1,6 +1,6 @@
-﻿# 项目进度记录：Sales Performance Analytics Dashboard
+﻿# 项目说明：Sales Performance Analytics Dashboard
 
-这个文件用于记录当前项目已经完成了什么、为什么这样做、以及下一步应该继续做什么。以后重新打开这个项目时，可以先读这个文件快速恢复上下文。
+这个文件用于说明当前项目已经完成的内容、数据来源、分析流程、Dashboard 展示方式和后续可改进方向。
 
 ## 项目目标
 
@@ -16,19 +16,7 @@
 - 业务洞察总结
 - GitHub 项目文档整理
 
-## 当前项目位置
-
-项目文件夹：
-
-```text
-C:\Users\admin\Desktop\销售数据分析仪表盘
-```
-
-当前 Mac 工作路径：
-
-```text
-/Users/kingtang01/Desktop/销售数据分析仪表盘
-```
+## 项目链接
 
 GitHub 仓库：
 
@@ -40,12 +28,6 @@ Vercel Live Demo：
 
 ```text
 https://sales-performance-dashboard-mauve.vercel.app/
-```
-
-Power BI 导入用的英文路径副本：
-
-```text
-C:\Users\admin\Desktop\powerbi_import\superstore_cleaned.csv
 ```
 
 ## 数据来源
@@ -101,6 +83,9 @@ https://raw.githubusercontent.com/curran/data/gh-pages/superstoreSales/superstor
 |-- assets/
 |   `-- sales_performance_dashboard.png
 |-- dashboard/
+|   |-- dashboard-data.js
+|   |-- dashboard.css
+|   |-- index.html
 |   |-- powerbi_build_guide.md
 |   `-- powerbi_measures.dax
 |-- data/
@@ -117,8 +102,10 @@ https://raw.githubusercontent.com/curran/data/gh-pages/superstoreSales/superstor
 |   |-- README.md
 |   `-- run_sqlite_analysis.ps1
 |-- scripts/
-|   `-- build_dashboard.ps1
+|   |-- build_dashboard.ps1
+|   `-- validate_dashboard.mjs
 |-- data_dictionary.md
+|-- index.html
 |-- README.md
 |-- PROJECT_PROGRESS_CN.md
 `-- .gitignore
@@ -128,7 +115,7 @@ https://raw.githubusercontent.com/curran/data/gh-pages/superstoreSales/superstor
 
 ### 0. Mac 浏览器版 Dashboard
 
-用户已更换为 Mac 环境，当前不再把 Power BI Desktop 作为必需工具。项目主线已经调整为 Mac 可直接打开的静态浏览器 dashboard。
+当前项目主线已经调整为 Mac 可直接打开的静态浏览器 dashboard，Power BI Desktop 不再是必需工具。
 
 新增文件：
 
@@ -148,7 +135,7 @@ dashboard/dashboard-data.js
 - 也可以用 `python3 -m http.server 8765 --bind 127.0.0.1` 后访问 `http://127.0.0.1:8765/` 做本地预览
 - 使用 `analysis/` 中已有 summary 数据固化成前端常量
 - 展示 KPI、月度趋势、地区销售、品类利润、客户类型贡献和高销售低利润子类别
-- 已通过 Codex 浏览器插件用 localhost 预览验证：桌面端有 6 个 KPI、5 个面板、4 行风险表；移动端 390px 视口可正常显示；浏览器 console 无 error
+- 已通过 localhost 预览验证：桌面端有 6 个 KPI、5 个面板、4 行风险表；移动端 390px 视口可正常显示；浏览器 console 无 error
 - 已部署到 Vercel，并通过线上 URL 验证：根路径会跳转到 `/dashboard/index.html`，线上页面包含 6 个 KPI、5 个面板、4 行风险表，`Prairie` 拼写正确，浏览器 console 无 error
 
 README 的项目定位也应以 browser-based analytics dashboard 为主，Power BI 只作为 optional recreation notes。
@@ -313,21 +300,13 @@ data_dictionary.md
 
 这是为了让项目更像真实公司的分析交付物，也更适合 entry-level Data Analyst 简历项目。
 
-## Power BI 当前进度
+## Optional Power BI Notes
 
 重要更新：
 
-用户目前使用 Mac，没有 Power BI Desktop。Power BI 不再是当前项目完成的必要路径。
+当前项目以 Mac/browser-based dashboard 为主，Power BI 不再是项目完成的必要路径。
 
-下面内容保留为历史记录和可选扩展说明。如果之后用户重新使用 Windows 或 Power BI Desktop，可以继续参考。
-
-用户已经安装了中文版 Power BI Desktop。
-
-用户已经成功导入 CSV 数据。为了避免中文路径问题，使用的是这个文件：
-
-```text
-C:\Users\admin\Desktop\powerbi_import\superstore_cleaned.csv
-```
+下面内容保留为可选扩展说明。如果之后需要补充 Power BI 版本，可以继续参考。
 
 Power BI 中的数据表名称：
 
@@ -370,17 +349,6 @@ COUNTROWS(
     )
 )
 ```
-
-用户曾经一次性粘贴多个 measure，导致 Power BI 里出现一个错误的旧 measure，名字是中文：
-
-```text
-度量值
-```
-
-处理建议：
-
-- 删除带红色三角形的错误 measure `度量值`
-- 保留正确创建的 measures
 
 ## Power BI 下一步
 
@@ -452,7 +420,7 @@ Built a Power BI dashboard
 Power BI-ready cleaned dataset, DAX measures, and build guide
 ```
 
-等用户在 Power BI Desktop 中完成 dashboard，并保存为：
+等未来在 Power BI Desktop 中完成 dashboard，并保存为：
 
 ```text
 dashboard/sales_performance_dashboard.pbix
@@ -460,17 +428,21 @@ dashboard/sales_performance_dashboard.pbix
 
 之后才可以把 README 和简历 bullet 改成真正的 Power BI dashboard 项目。
 
-## Git 状态
+## 版本发布状态
 
-项目已经初始化为 Git 仓库。
+项目已经发布为公开 GitHub 仓库，并通过 Vercel 部署为在线 dashboard。
 
-由于 Codex sandbox 用户和 Windows 用户不同，普通 `git status` 可能会触发 dubious ownership。使用这个命令查看状态：
+GitHub：
 
-```powershell
-git -c safe.directory=C:/Users/admin/Desktop/销售数据分析仪表盘 status --short
+```text
+https://github.com/KingTang6/sales-performance-dashboard
 ```
 
-目前大部分文件还未 commit。
+Vercel Live Demo：
+
+```text
+https://sales-performance-dashboard-mauve.vercel.app/
+```
 
 ## 后续建议
 
@@ -480,14 +452,4 @@ git -c safe.directory=C:/Users/admin/Desktop/销售数据分析仪表盘 status 
 2. 检查 README 是否准确描述 browser-based dashboard。
 3. 不要写 “Built a Power BI dashboard”，除非未来真的保存出 `.pbix` 文件。
 4. 可以把 `dashboard/index.html` 作为 GitHub portfolio 的主要展示成果。
-5. 最后检查 GitHub 项目结构并 commit。
-
-## 给未来 Codex 的提醒
-
-- 用户希望中文解释计划和步骤。
-- GitHub/README/简历 bullet 建议保持英文。
-- 用户是 UCSB PSTAT 毕业生，没有实习经验，希望用项目补简历。
-- 回答要稳妥，不要夸大项目。
-- 用户现在使用 Mac，没有 Power BI Desktop；优先走 browser-based dashboard 路线。
-- 如果用户发 Power BI 截图，直接根据截图告诉他下一步点哪里。
-- 不要说已经完成 `.pbix`，除非文件真实存在。
+5. 后续可以增加交互式筛选器、更多成本分析和可复现的 notebook 说明。
