@@ -30,6 +30,25 @@ Vercel Live Demo：
 https://sales-performance-dashboard-mauve.vercel.app/
 ```
 
+## 项目身份边界
+
+这是第一版、简历投递用的固定销售数据分析项目：
+
+```text
+Sales Performance Analytics Dashboard
+```
+
+它只分析项目内置的 Superstore 销售数据，重点是数据清洗、SQL、KPI、dashboard、business findings 和 recommendations。
+
+不要和下面这个后续扩展项目混用：
+
+```text
+Business & Operations CSV Auto Analysis Dashboard
+https://github.com/KingTang6/sales-data-auto-dashboard
+```
+
+后者是上传式 CSV 自动分析工具，默认空状态、支持字段识别和多业务域模板。两个项目的 README、截图、Vercel 链接和简历描述都应分开。
+
 ## 数据来源
 
 使用的是公开 Superstore-style 销售数据：
@@ -132,7 +151,7 @@ dashboard/dashboard-data.js
 - 不依赖 npm、React、Next.js、Plotly 或 Python server
 - 可以直接在浏览器打开 `dashboard/index.html`
 - 根目录 `index.html` 会自动跳转到 `dashboard/index.html`，方便 Vercel 部署后使用根路径访问
-- 也可以用 `python3 -m http.server 8765 --bind 127.0.0.1` 后访问 `http://127.0.0.1:8765/` 做本地预览
+- 也可以用 `python3 -m http.server 8766 --bind 127.0.0.1` 后访问 `http://127.0.0.1:8766/` 做本地预览。`8765` 建议留给另一个 CSV 自动分析项目，避免本地预览混淆。
 - 使用 `analysis/` 中已有 summary 数据固化成前端常量
 - 展示 KPI、月度趋势、地区销售、品类利润、客户类型贡献和高销售低利润子类别
 - 已通过 localhost 预览验证：桌面端有 6 个 KPI、5 个面板、4 行风险表；移动端 390px 视口可正常显示；浏览器 console 无 error
@@ -427,6 +446,17 @@ dashboard/sales_performance_dashboard.pbix
 ```
 
 之后才可以把 README 和简历 bullet 改成真正的 Power BI dashboard 项目。
+
+## 本地辅助文件
+
+以下文件属于本机辅助草稿，不纳入公开 GitHub 项目主线：
+
+```text
+scripts/create_project_interview_doc.py
+.DS_Store
+```
+
+它们已经加入 `.gitignore`。公开仓库仍以 README、dashboard、analysis、sql、data dictionary 和可复现脚本为主。
 
 ## 版本发布状态
 

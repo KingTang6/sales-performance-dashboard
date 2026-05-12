@@ -10,7 +10,15 @@ The project is designed as an entry-level Data Analyst portfolio case study with
 
 The main dashboard is now a static browser-based report that can be opened directly on macOS without Power BI Desktop, npm, or a local server.
 
+Project repository: [KingTang6/sales-performance-dashboard](https://github.com/KingTang6/sales-performance-dashboard)
+
 Live demo: [sales-performance-dashboard-mauve.vercel.app](https://sales-performance-dashboard-mauve.vercel.app/)
+
+## Project Identity
+
+This is the resume-ready first version: a fixed Superstore sales analytics case study with precomputed metrics, SQL queries, business findings, and a static dashboard.
+
+It is separate from [KingTang6/sales-data-auto-dashboard](https://github.com/KingTang6/sales-data-auto-dashboard), which is a later upload-driven CSV analysis tool. Do not use the generic CSV tool's README, local port, or deployment link when presenting this sales case study.
 
 ## Business Questions
 
@@ -159,16 +167,16 @@ index.html
 
 The root page redirects to `dashboard/index.html`, which keeps the dashboard folder organized while giving deployed sites a simple home URL.
 
-For a localhost preview, run:
+For a localhost preview, use port `8766` so this project does not collide with the separate CSV auto-analysis app that commonly uses port `8765`:
 
 ```bash
-python3 -m http.server 8765 --bind 127.0.0.1
+python3 -m http.server 8766 --bind 127.0.0.1
 ```
 
 Then open:
 
 ```text
-http://127.0.0.1:8765/
+http://127.0.0.1:8766/
 ```
 
 Validate the dashboard data and documentation checks:

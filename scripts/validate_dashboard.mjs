@@ -10,6 +10,7 @@ const requiredFiles = [
   "dashboard/dashboard-data.js",
   "README.md",
   "PROJECT_PROGRESS_CN.md",
+  "PROJECT_IDENTITY.md",
 ];
 
 function assert(condition, message) {
@@ -96,5 +97,17 @@ const readme = readText("README.md");
 assert(readme.includes("HTML/CSS/JavaScript"), "README should position the browser dashboard as a project tool");
 assert(!readme.includes("Power BI-ready cleaned dataset, DAX measures, and build guide"), "README still uses old Power BI-ready positioning");
 assert(!readme.includes("Built a Power BI dashboard"), "README should not claim a Power BI dashboard was built");
+assert(readme.includes("Project Identity"), "README should document the first-version project identity");
+assert(readme.includes("sales-performance-dashboard"), "README should point to the first-version GitHub repository");
+assert(readme.includes("sales-data-auto-dashboard"), "README should distinguish the later CSV auto-analysis project");
+
+const progressLog = readText("PROJECT_PROGRESS_CN.md");
+assert(progressLog.includes("项目身份边界"), "Progress log should document project identity boundaries");
+assert(progressLog.includes("8766"), "Progress log should reserve port 8766 for this first-version project");
+
+const projectIdentity = readText("PROJECT_IDENTITY.md");
+assert(projectIdentity.includes("Sales Performance Analytics Dashboard"), "Project identity should name the sales dashboard");
+assert(projectIdentity.includes("https://github.com/KingTang6/sales-performance-dashboard"), "Project identity should point to the sales GitHub repo");
+assert(projectIdentity.includes("https://sales-performance-dashboard-mauve.vercel.app/"), "Project identity should point to the sales Vercel demo");
 
 console.log("Dashboard validation passed.");

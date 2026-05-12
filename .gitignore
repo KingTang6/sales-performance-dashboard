@@ -1,4 +1,6 @@
 .superpowers/
+.DS_Store
+scripts/create_project_interview_doc.py
 *.tmp
 *.log
 superstore_analysis.db
