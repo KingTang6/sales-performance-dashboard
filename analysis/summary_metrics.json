@@ -1,0 +1,19 @@
+﻿{
+    "DataSource":  "https://raw.githubusercontent.com/curran/data/gh-pages/superstoreSales/superstoreSales.csv",
+    "Rows":  8399,
+    "Orders":  5496,
+    "TotalSales":  14915600.92,
+    "TotalProfit":  1521767.98,
+    "TotalQuantity":  214777,
+    "ProfitMargin":  0.102,
+    "AverageDiscount":  0.0497,
+    "NegativeProfitRows":  4264,
+    "TopRegion":  "West",
+    "TopRegionSales":  3597549.33,
+    "TopCategory":  "Technology",
+    "TopCategoryProfit":  886313.52,
+    "TopSegment":  "Corporate",
+    "TopSegmentSales":  5498904.85,
+    "LowestMarginRiskSubCategory":  "Tables",
+    "LowestMarginRiskSubCategoryMargin":  -0.0522
+}

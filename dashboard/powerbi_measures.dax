@@ -1,0 +1,44 @@
+Total Sales =
+SUM ( superstore_cleaned[Sales] )
+
+Total Profit =
+SUM ( superstore_cleaned[Profit] )
+
+Profit Margin =
+DIVIDE ( [Total Profit], [Total Sales] )
+
+Total Orders =
+DISTINCTCOUNT ( superstore_cleaned[OrderID] )
+
+Total Quantity =
+SUM ( superstore_cleaned[Quantity] )
+
+Average Discount =
+AVERAGE ( superstore_cleaned[Discount] )
+
+Negative Profit Rows =
+COUNTROWS (
+    FILTER (
+        superstore_cleaned,
+        superstore_cleaned[Profit] < 0
+    )
+)
+
+Sales Rank by Region =
+RANKX (
+    ALL ( superstore_cleaned[Region] ),
+    [Total Sales],
+    ,
+    DESC
+)
+
+High Sales Low Profit Flag =
+VAR SubCategorySales = [Total Sales]
+VAR SubCategoryMargin = [Profit Margin]
+RETURN
+    IF (
+        SubCategorySales >= 100000
+            && SubCategoryMargin < 0.05,
+        "Review",
+        "Healthy"
+    )

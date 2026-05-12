@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sales Performance Analytics Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+  </head>
+  <body>
+    <main class="page">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Portfolio Analytics Dashboard</p>
+          <h1>Sales Performance Analytics Dashboard</h1>
+          <p class="summary">
+            Retail sales performance view across revenue, profit quality, region, customer segment,
+            and product margin risk. Built from cleaned Superstore-style transaction data.
+          </p>
+        </div>
+        <div class="data-window">Data window: 2009-2012</div>
+      </header>
+
+      <section class="kpi-grid" aria-label="Dashboard KPI cards" id="kpi-grid"></section>
+
+      <section class="content-grid">
+        <article class="panel panel-wide">
+          <div class="panel-header">
+            <div>
+              <h2>Monthly Sales and Profit Trend</h2>
+              <p>Sales volume stayed materially higher than profit, so margin must be reviewed alongside growth.</p>
+            </div>
+            <div class="legend" aria-label="Chart legend">
+              <span class="legend-sales">Sales</span>
+              <span class="legend-profit">Profit</span>
+            </div>
+          </div>
+          <div class="chart" id="trend-chart"></div>
+        </article>
+
+        <article class="panel panel-side">
+          <div class="panel-header">
+            <div>
+              <h2>Region Sales Ranking</h2>
+              <p>West leads sales, while margin varies across regions.</p>
+            </div>
+          </div>
+          <div class="bar-list" id="region-bars"></div>
+        </article>
+
+        <article class="panel panel-half">
+          <div class="panel-header">
+            <div>
+              <h2>Category Profitability</h2>
+              <p>Technology contributes the strongest profit; Furniture has weak margin despite large sales.</p>
+            </div>
+          </div>
+          <div class="bar-list" id="category-bars"></div>
+        </article>
+
+        <article class="panel panel-half">
+          <div class="panel-header">
+            <div>
+              <h2>Customer Segment Contribution</h2>
+              <p>Corporate customers provide the largest revenue base and profit contribution.</p>
+            </div>
+          </div>
+          <div class="bar-list" id="segment-bars"></div>
+        </article>
+
+        <article class="panel panel-full">
+          <div class="panel-header">
+            <div>
+              <h2>High-Sales Low-Profit Review</h2>
+              <p>Sub-categories with high revenue and thin or negative margin should be reviewed before scaling promotions.</p>
+            </div>
+          </div>
+          <table class="risk-table">
+            <thead>
+              <tr>
+                <th>Sub-category</th>
+                <th>Sales</th>
+                <th>Profit</th>
+                <th>Quantity</th>
+                <th>Margin</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="risk-table-body"></tbody>
+          </table>
+        </article>
+      </section>
+
+      <section class="insight-strip" aria-label="Key business insights">
+        <div class="insight">
+          <strong>Revenue leader</strong>
+          <span>West generated the highest regional sales at $3.60M.</span>
+        </div>
+        <div class="insight">
+          <strong>Profit leader</strong>
+          <span>Technology generated $886.3K profit with a 14.8% margin.</span>
+        </div>
+        <div class="insight">
+          <strong>Margin risk</strong>
+          <span>Tables produced $1.90M sales but a -5.2% margin.</span>
+        </div>
+      </section>
+    </main>
+
+    <script src="dashboard-data.js"></script>
+    <script>
+      const currency = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+      });
+
+      const compactCurrency = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        notation: "compact",
+        maximumFractionDigits: 2,
+      });
+
+      const wholeNumber = new Intl.NumberFormat("en-US");
+      const percent = new Intl.NumberFormat("en-US", {
+        style: "percent",
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      });
+
+      function renderKpis() {
+        const { kpis } = dashboardData;
+        const cards = [
+          ["Total Sales", compactCurrency.format(kpis.totalSales), "Revenue across all transaction rows"],
+          ["Total Profit", compactCurrency.format(kpis.totalProfit), "Profit after transaction costs"],
+          ["Profit Margin", percent.format(kpis.profitMargin), "Total profit divided by total sales"],
+          ["Total Orders", wholeNumber.format(kpis.totalOrders), "Distinct order count"],
+          ["Average Discount", percent.format(kpis.averageDiscount), "Average row-level discount"],
+          ["Negative Profit Rows", wholeNumber.format(kpis.negativeProfitRows), "Rows that lost money"],
+        ];
+
+        document.getElementById("kpi-grid").innerHTML = cards
+          .map(([label, value, note]) => `
+            <article class="kpi-card">
+              <div>
+                <div class="kpi-label">${label}</div>
+                <div class="kpi-value">${value}</div>
+              </div>
+              <div class="kpi-note">${note}</div>
+            </article>
+          `)
+          .join("");
+      }
+
+      function renderTrendChart() {
+        const rows = dashboardData.monthly;
+        const width = 920;
+        const height = 320;
+        const pad = { top: 18, right: 24, bottom: 44, left: 62 };
+        const innerWidth = width - pad.left - pad.right;
+        const innerHeight = height - pad.top - pad.bottom;
+        const maxValue = Math.max(...rows.flatMap((row) => [row.sales, row.profit]));
+        const x = (index) => pad.left + (index / (rows.length - 1)) * innerWidth;
+        const y = (value) => pad.top + innerHeight - (value / maxValue) * innerHeight;
+        const pointsFor = (field) => rows.map((row, index) => `${x(index)},${y(row[field])}`).join(" ");
+        const yearTicks = rows
+          .map((row, index) => ({ row, index }))
+          .filter(({ row }) => row.yearMonth.endsWith("-01"));
+        const gridTicks = [0, 0.25, 0.5, 0.75, 1];
+
+        document.getElementById("trend-chart").innerHTML = `
+          <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Monthly sales and profit line chart">
+            ${gridTicks.map((tick) => {
+              const yPos = pad.top + innerHeight - tick * innerHeight;
+              return `
+                <line class="grid-line" x1="${pad.left}" y1="${yPos}" x2="${width - pad.right}" y2="${yPos}"></line>
+                <text class="axis-label" x="8" y="${yPos + 4}">${compactCurrency.format(maxValue * tick)}</text>
+              `;
+            }).join("")}
+            <polyline class="line-sales" points="${pointsFor("sales")}"></polyline>
+            <polyline class="line-profit" points="${pointsFor("profit")}"></polyline>
+            ${yearTicks.map(({ row, index }) => `
+              <text class="axis-label" x="${x(index) - 16}" y="${height - 14}">${row.yearMonth.slice(0, 4)}</text>
+            `).join("")}
+          </svg>
+        `;
+      }
+
+      function renderBars(elementId, rows, options) {
+        const maxValue = Math.max(...rows.map((row) => Math.abs(row[options.valueKey])));
+        document.getElementById(elementId).innerHTML = rows
+          .map((row) => {
+            const value = row[options.valueKey];
+            const width = Math.max(2, (Math.abs(value) / maxValue) * 100);
+            const fillClass = options.fillClass || "sales";
+            const label = row[options.labelKey];
+            const subValue = options.subValue ? ` · ${options.subValue(row)}` : "";
+
+            return `
+              <div class="bar-row">
+                <div class="bar-label" title="${label}">${label}</div>
+                <div class="bar-track">
+                  <div class="bar-fill ${fillClass}" style="width: ${width}%"></div>
+                </div>
+                <div class="bar-value">${options.format(value)}${subValue}</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderRiskTable() {
+        document.getElementById("risk-table-body").innerHTML = dashboardData.marginRisks
+          .map((row) => {
+            const needsReview = row.profitMargin < 0.05;
+            return `
+              <tr class="${needsReview ? "risk-row" : ""}">
+                <td><strong>${row.subCategory}</strong></td>
+                <td>${currency.format(row.sales)}</td>
+                <td>${currency.format(row.profit)}</td>
+                <td>${wholeNumber.format(row.quantity)}</td>
+                <td>${percent.format(row.profitMargin)}</td>
+                <td><span class="status-pill ${needsReview ? "review" : ""}">${needsReview ? "Review" : "Monitor"}</span></td>
+              </tr>
+            `;
+          })
+          .join("");
+      }
+
+      renderKpis();
+      renderTrendChart();
+      renderBars("region-bars", dashboardData.regions, {
+        labelKey: "region",
+        valueKey: "sales",
+        format: compactCurrency.format,
+        subValue: (row) => percent.format(row.profitMargin),
+      });
+      renderBars("category-bars", dashboardData.categories, {
+        labelKey: "category",
+        valueKey: "profit",
+        fillClass: "profit",
+        format: compactCurrency.format,
+        subValue: (row) => percent.format(row.profitMargin),
+      });
+      renderBars("segment-bars", dashboardData.segments, {
+        labelKey: "segment",
+        valueKey: "sales",
+        format: compactCurrency.format,
+        subValue: (row) => percent.format(row.profitMargin),
+      });
+      renderRiskTable();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+.superpowers/
+*.tmp
+*.log
+superstore_analysis.db
+Thumbs.db
+Desktop.ini

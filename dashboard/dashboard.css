@@ -1,0 +1,406 @@
+:root {
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --panel-soft: #f0f4f8;
+  --text: #18202a;
+  --muted: #64748b;
+  --border: #d8e0ea;
+  --sales: #2563eb;
+  --profit: #15935b;
+  --risk: #c2410c;
+  --risk-soft: #fff3ed;
+  --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.page {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.dashboard-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: 2rem;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+.summary {
+  max-width: 840px;
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.data-window {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.kpi-card,
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.kpi-card {
+  min-height: 118px;
+  padding: 16px;
+  display: grid;
+  align-content: space-between;
+}
+
+.kpi-label {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.kpi-value {
+  margin-top: 8px;
+  font-size: 1.65rem;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+.kpi-note {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.panel {
+  min-width: 0;
+  padding: 18px;
+}
+
+.panel-wide {
+  grid-column: span 8;
+}
+
+.panel-side {
+  grid-column: span 4;
+}
+
+.panel-half {
+  grid-column: span 6;
+}
+
+.panel-full {
+  grid-column: 1 / -1;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.panel-header h2 {
+  margin-bottom: 4px;
+  font-size: 1.05rem;
+}
+
+.panel-header p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend span::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  content: "";
+}
+
+.legend-sales::before {
+  background: var(--sales);
+}
+
+.legend-profit::before {
+  background: var(--profit);
+}
+
+.chart {
+  width: 100%;
+  min-height: 280px;
+}
+
+.bar-list {
+  display: grid;
+  gap: 12px;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 190px) 1fr minmax(92px, auto);
+  gap: 12px;
+  align-items: center;
+}
+
+.bar-label {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bar-track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--panel-soft);
+}
+
+.bar-fill {
+  height: 100%;
+  min-width: 3px;
+  border-radius: inherit;
+  background: var(--sales);
+}
+
+.bar-fill.profit {
+  background: var(--profit);
+}
+
+.bar-fill.risk {
+  background: var(--risk);
+}
+
+.bar-value {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.risk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.risk-table th,
+.risk-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+}
+
+.risk-table th:first-child,
+.risk-table td:first-child {
+  text-align: left;
+}
+
+.risk-table th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.risk-table tbody tr.risk-row {
+  background: var(--risk-soft);
+}
+
+.status-pill {
+  display: inline-block;
+  min-width: 76px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eef6ff;
+  color: var(--sales);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.status-pill.review {
+  background: #fee9df;
+  color: var(--risk);
+}
+
+.insight-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.insight {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.insight strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.insight span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.axis-label {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.grid-line {
+  stroke: #e6ecf2;
+  stroke-width: 1;
+}
+
+.line-sales {
+  fill: none;
+  stroke: var(--sales);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.line-profit {
+  fill: none;
+  stroke: var(--profit);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+@media (max-width: 1120px) {
+  .kpi-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .panel-wide,
+  .panel-side,
+  .panel-half {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 18px;
+  }
+
+  .dashboard-header {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 1.55rem;
+  }
+
+  .kpi-grid,
+  .insight-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-header {
+    display: block;
+  }
+
+  .legend {
+    margin-top: 10px;
+  }
+
+  .bar-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .bar-value {
+    text-align: left;
+  }
+
+  .risk-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
