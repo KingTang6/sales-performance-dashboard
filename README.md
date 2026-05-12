@@ -10,6 +10,8 @@ The project is designed as an entry-level Data Analyst portfolio case study with
 
 The main dashboard is now a static browser-based report that can be opened directly on macOS without Power BI Desktop, npm, or a local server.
 
+Live demo: [sales-performance-dashboard-mauve.vercel.app](https://sales-performance-dashboard-mauve.vercel.app/)
+
 ## Business Questions
 
 - What are total sales, total profit, profit margin, total orders, and quantity sold?

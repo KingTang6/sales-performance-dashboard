@@ -30,6 +30,18 @@ C:\Users\admin\Desktop\销售数据分析仪表盘
 /Users/kingtang01/Desktop/销售数据分析仪表盘
 ```
 
+GitHub 仓库：
+
+```text
+https://github.com/KingTang6/sales-performance-dashboard
+```
+
+Vercel Live Demo：
+
+```text
+https://sales-performance-dashboard-mauve.vercel.app/
+```
+
 Power BI 导入用的英文路径副本：
 
 ```text
@@ -137,6 +149,7 @@ dashboard/dashboard-data.js
 - 使用 `analysis/` 中已有 summary 数据固化成前端常量
 - 展示 KPI、月度趋势、地区销售、品类利润、客户类型贡献和高销售低利润子类别
 - 已通过 Codex 浏览器插件用 localhost 预览验证：桌面端有 6 个 KPI、5 个面板、4 行风险表；移动端 390px 视口可正常显示；浏览器 console 无 error
+- 已部署到 Vercel，并通过线上 URL 验证：根路径会跳转到 `/dashboard/index.html`，线上页面包含 6 个 KPI、5 个面板、4 行风险表，`Prairie` 拼写正确，浏览器 console 无 error
 
 README 的项目定位也应以 browser-based analytics dashboard 为主，Power BI 只作为 optional recreation notes。
 
